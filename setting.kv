@@ -1,0 +1,85 @@
+#:import NumericSettingItem setting_item.NumericSettingItem
+#:import SettingCategory setting_item.SettingCategory
+
+<SettingScreen>:
+    ScrollView:
+        size_hint: 1, 1
+        MDGridLayout:
+            size_hint: 1, None
+            adaptive_height: True
+            cols: 1
+            spacing: dp(1)
+            Widget:
+                size_hint: 1, None
+                height: dp(49)
+            SettingCategory:
+                text: app.text['intonation']
+            NumericSettingItem:
+                setting: 'm_score_i'
+            NumericSettingItem:
+                setting: 'i_q'
+            NumericSettingItem:
+                setting: 'i_g'
+            NumericSettingItem:
+                setting: 'i_e'
+            NumericSettingItem:
+                setting: 'i_m'
+            NumericSettingItem:
+                setting: 'i_r'
+
+            SettingCategory:
+                text: app.text['memorizing']
+            NumericSettingItem:
+                setting: 'm_score_m'
+            NumericSettingItem:
+                setting: 'm_1'
+            NumericSettingItem:
+                setting: 'm_2'
+            NumericSettingItem:
+                setting: 'm_3'
+            NumericSettingItem:
+                setting: 'm_s'
+            NumericSettingItem:
+                setting: 'm_r'
+            NumericSettingItem:
+                setting: 'silence_time'
+
+            SettingCategory:
+                text: app.text['performance']
+            NumericSettingItem:
+                setting: 'm_score_p'
+
+    MDIconButton:
+        icon: 'arrow-left'
+        pos_hint: {'top': 1}
+        x: 0
+        theme_text_color: 'Custom'
+        icon_color: self.theme_cls.primary_color
+        on_release:
+            app.save_settings()
+            app.root.current = 'home'
+        canvas.before:
+            Color:
+                rgba: self.theme_cls.bg_normal
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [0, 0, dp(25), 0]
+
+    MDLabel:
+        text: app.text['settings']
+        pos_hint: {'right': 1, 'top': 1}
+        size_hint: 0.8, None
+        height: dp(49)
+        halign: 'center'
+        font_size: sp(24)
+        theme_text_color: 'Custom'
+        color: self.theme_cls.primary_color
+        canvas.before:
+            Color:
+                rgba: self.theme_cls.bg_normal
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [0, 0, 0, dp(25)]
+

@@ -1,0 +1,149 @@
+#:import to_ar Arabic_for_Kivy.to_ar
+#:import ContestantListItem contestant_list_item.ContestantListItem
+
+<HomeScreen>:
+	MDFloatLayout:
+        id: home_box
+        size_hint: 1, 0.33
+        pos_hint: {'top': 1}
+        canvas.before:
+            Color:
+                rgba: app.theme_cls.bg_normal
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+		Image:
+			source: "assets/Media/Quran-Shadow.ico"
+			pos_hint: {"center_x": 0.3, "center_y": 0.5}
+			size_hint: 0.4, 1
+
+		ScrollView:
+			size_hint: 1, None
+			height: root.height - home_box.height
+			scroll_y_effect: None
+			pos: 0, 0
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.bg_darkest
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+			MDGridLayout:
+			    id: contestants_list
+			    cols: 1
+				size_hint: 1, None
+				adaptive_height: True
+				padding: [0, dp(41), 0, 0]
+
+
+		MDLabel:
+			text: app.text["the contestants"]
+			font_size: sp(21)
+			halign: 'center'
+			size_hint: None, None
+			size: dp(110), dp(48)
+			top: home_box.y
+			pos_hint: {'right': 1}
+			color: self.theme_cls.primary_dark
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.bg_normal
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, 0, dp(20)]
+
+		MDIconButton:
+			icon: 'database-import-outline'
+			top: home_box.y
+			pos_hint: {'left': 1}
+			theme_text_color: 'Custom'
+			icon_color: self.theme_cls.primary_color
+			on_release:
+			    app.import_()
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.bg_normal
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, 0, dp(20)]
+
+		MDIconButton:
+			icon: 'database-export-outline'
+			top: home_box.y
+			x: dp(48)
+			theme_text_color: 'Custom'
+			icon_color: self.theme_cls.primary_color
+			on_release:
+			    app.export()
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.bg_normal
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, dp(20), 0]
+
+		MDIconButton:
+			icon: 'plus'
+			top: home_box.y
+			x: dp(48) * 2
+			theme_text_color: 'Custom'
+			icon_color: self.theme_cls.primary_color
+			on_release:
+			    root.new_contestant()
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.bg_normal
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, dp(20), 20]
+
+		MDIconButton:
+			icon: 'file-compare'
+			top: home_box.top
+			pos_hint: {'left': 1}
+			theme_text_color: 'Custom'
+			icon_color: 1,1,1,1
+			on_release:
+			    app.root.current = 'compare'
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_dark
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, dp(20), 0]
+
+		MDIconButton:
+			icon: 'cog-outline'
+			top: home_box.top
+			pos_hint: {'right': 1}
+			theme_text_color: 'Custom'
+			icon_color: 1,1,1,1
+			on_release:
+			    app.root.current = 'setting'
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_dark
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+		            radius: [0, 0, 0, dp(20)]
+
+
+        # Judge text field
+		MDTextField:
+            id: judge_name_field
+#            text: app.judge_name
+			halign: 'right'
+			size_hint: 0.6, None
+			pos_hint: {"center_y": 0.5, "right":0.9}
+			hint_text: to_ar(app.text['judge name'])
+			on_text:
+			    app.judge_name = self.text
+			on_focus:
+			    if not self.focus: app.save_settings()

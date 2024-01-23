@@ -1,0 +1,67 @@
+{
+    "settings": {
+        "Score": [
+            [
+                "intonation",
+                "25"
+            ],
+            [
+                "memorizing",
+                "70"
+            ],
+            [
+                "performance",
+                "5"
+            ]
+        ],
+        "Intonation": [
+            [
+                "qalqala",
+                "0.2"
+            ],
+            [
+                "guna",
+                "0.2"
+            ],
+            [
+                "exit",
+                "0.2"
+            ],
+            [
+                "mdd",
+                "0.2"
+            ],
+            [
+                "revert",
+                "2.0"
+            ]
+        ],
+        "Memorizing": [
+            [
+                "mistake",
+                "0.5"
+            ],
+            [
+                "two",
+                "1.0"
+            ],
+            [
+                "three",
+                "2.0"
+            ],
+            [
+                "silence",
+                "2.0"
+            ],
+            [
+                "revert",
+                "0.5"
+            ],
+            [
+                "silence_time",
+                "10"
+            ]
+        ]
+    },
+    "contestants": []
+}

@@ -1,0 +1,145 @@
+#:import ScoreListItem score_item_list.ScoreListItem
+#:import ScoreListItemNew score_item_list.ScoreListItemNew
+#:import ContestantDetailedScore contestant_list_item.ContestantDetailedScore
+#:import iffloat kivymd.utils.iffloat
+
+<Compare>:
+	md_bg_color: app.theme_cls.primary_dark
+	radius: [dp(70), dp(500), dp(200), dp(180)]
+	MDIconButton:
+		icon: "home"
+		pos_hint: {'top': 1, 'left': 1}
+        theme_text_color: 'Custom'
+        icon_color: self.theme_cls.primary_color
+        on_release:
+            app.root.current = 'home'
+		canvas.before:
+			Color:
+				rgba: self.theme_cls.bg_light
+			RoundedRectangle:
+				pos: self.pos
+				size: self.size
+				radius: [0, 0, dp(20), 0]
+
+	MDCard:
+		size_hint: .92, None
+		height: scores_box.height + dp(60)
+#		padding: dp(9)
+		pos_hint: {'center_x': 0.5}
+		y: scores_box.y - dp(50)
+		md_bg_color: 1,1,1,0
+		progress: self.width * (sum(average.score) or 0.001) / app.max_score
+		radius: dp(20)
+		canvas.before:
+			Color:
+				rgba: self.theme_cls.bg_dark
+			RoundedRectangle:
+				pos: self.pos
+				size: self.width, self.height
+				radius: [dp(20)]
+
+			Color:
+				rgba: 0,0.7,0,1
+			RoundedRectangle:
+				pos: (self.x + (self.width - (self.progress or 0))), self.y
+                size: self.progress or 100, self.height
+				radius: [dp(20)]
+
+        ScoreListItem:
+            id: average
+            score: root.avg_score
+            md_bg_color2: 0,0,0,0
+
+	MDBoxLayout:
+		id: scores_box
+		size_hint: 0.9, None
+		adaptive_height: True
+		pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+		orientation: "vertical"
+		spacing: dp(2)
+		padding: dp(5), dp(8), dp(5), dp(8)
+		md_bg_color: app.theme_cls.primary_color
+		radius: dp(20)
+		on_children:
+		    root.recalculate_avg(args[1])
+
+		MDCard:
+			size_hint: 1, None
+			height: dp(50)
+			radius: dp(20)
+			padding: dp(8)
+			md_bg_color: 0,0,0,0
+			MDLabel:
+				text: app.text["total"]
+				halign: 'center'
+				color: 1,1,1,1
+				font_size: sp(18)
+			MDSeparator:
+                color: self.theme_cls.bg_dark
+				orientation: "vertical"
+			MDLabel:
+				text: app.text["intonation"]
+				halign: 'center'
+				color: 1,1,1,1
+				font_size: sp(18)
+			MDSeparator:
+                color: self.theme_cls.bg_dark
+				orientation: "vertical"
+			MDLabel:
+				text: app.text["memorizing"]
+				halign: 'center'
+				color: 1,1,1,1
+				font_size: sp(18)
+			MDSeparator:
+                color: self.theme_cls.bg_dark
+				orientation: "vertical"
+			MDLabel:
+				text: app.text["performance"]
+				halign: 'center'
+				color: 1,1,1,1
+				font_size: sp(18)
+
+		MDIconButton:
+			icon: 'plus'
+			size_hint: 1, None
+			md_bg_color: self.theme_cls.accent_color
+			on_release:
+			    root.add_widget(ScoreListItemNew(pos=self.pos, size_hint=[None, None], width=self.width, score=app.max_scores), 1)
+
+    # Contestants Drawer List
+    MDBoxLayout:
+        id: contestants
+        size_hint: None, None
+        height: root.height - dp(10)
+        width: root.width/2 if root.width/2 < dp(300) else dp(300)
+        pos: root.right, dp(5)
+        canvas.before:
+            Color:
+                rgba: app.theme_cls.accent_color
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [dp(24)]
+
+            Color:
+                rgba: app.theme_cls.bg_normal
+            RoundedRectangle:
+                pos: self.x + dp(2), self.y + dp(2)
+                size: self.width - dp(4), self.height - dp(4)
+                radius: [dp(24)]
+        ScrollView:
+            size_hint: 1,1
+            MDGridLayout:
+                id: contestants_list
+                screen: root
+                adaptive_height: True
+                cols: 1
+                size_hint: 1, None
+
+    MDIconButton:
+        icon: 'menu'
+        md_bg_color: app.theme_cls.accent_color
+        right: contestants.x - dp(5)
+        y: dp(5)
+        on_release:
+            root.drawer(self)

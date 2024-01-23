@@ -1,0 +1,26 @@
+#:import HomeScreen home.HomeScreen
+#:import ScoreKeeping score_keeping.ScoreKeeping
+#:import Compare compare.Compare
+#:import SettingScreen setting.SettingScreen
+<BaseButton>:
+    font_size: sp(19)
+<MDLabel>:
+    font_name: "assets/languages/AL-Mohanad.ttf"
+<MDTextField>:
+    font_name: "assets/languages/Amiri-Regular.ttf"
+    font_name_hint_text: "assets/languages/AL-Mohanad.ttf"
+    theme_font_styles: 'custom'
+<MDIcon>:
+    font_name: "kivymd/fonts/materialdesignicons-webfont.ttf"
+    font_size: sp(25)
+<Screens>:
+    HomeScreen:
+        name: 'home'
+    SettingScreen:
+        name: 'setting'
+    Compare:
+        name: 'compare'
+    ScoreKeeping:
+        id: score_keeping
+        name: 'score_keeping'
+        seconds: app.silence_time
